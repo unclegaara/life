@@ -19,8 +19,10 @@ def makefield():
         p.append([0] * n)
     return p
 
+
 def drawcircle(window, x, y):
     pygame.draw.circle(window, (dotcolor), (x, y), dot_width / 2)
+
 
 def drawfield(window, p):
     pygame.draw.rect(window, (fieldcolor), (0, 0, width, width), 0)
@@ -77,11 +79,16 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     state = 1 - state
-            elif state == 0:
+            if state == 0:
                 if event.type == pygame.MOUSEMOTION:
                     if pygame.mouse.get_pressed()[0]:
                         (x1, y1) = event.pos
                         pos[x1 / dot_width][y1 / dot_width] = 1
+                        drawfield(window, pos)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        state = 0
+                        pos = deepcopy(empty_pos)
                         drawfield(window, pos)
 
 if __name__=='__main__':
